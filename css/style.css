@@ -1,0 +1,269 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap");
+
+/* ===== RESET GLOBAL ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Orbitron", sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #2a003e, #5e007a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ===== WRAPPER GERAL ===== */
+.machine-wrapper {
+  perspective: 1200px;
+}
+
+/* ===== CORPO DA MÁQUINA ===== */
+.slot-machine {
+  display: flex;
+  align-items: center;
+  padding: 50px;
+  border-radius: 30px;
+  background: linear-gradient(145deg, #2a003e, #7a0099);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.6),
+    inset 0 0 20px rgba(255, 0, 200, 0.5);
+  transform: rotateX(8deg);
+}
+
+/* ===== ÁREA DOS SLOTS ===== */
+.slots {
+  display: flex;
+  gap: 30px;
+}
+
+/* ===== SLOT (JANELA) ===== */
+.slot {
+  width: 160px;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #0d0014, #1a0026);
+  border: 4px solid #ff4fd8;
+  box-shadow:
+    inset 0 10px 20px rgba(0, 0, 0, 0.8),
+    inset 0 -5px 10px rgba(255, 0, 200, 0.3);
+}
+
+/* ===== REEL (FAIXA QUE GIRA) ===== */
+.reel {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+
+/* ===== SÍMBOLO (AGORA COM IMAGEM) ===== */
+.symbol {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 🔥 IMAGEM DO SLOT */
+.symbol img {
+  width: 80%;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 0 15px rgba(255, 79, 216, 0.8));
+}
+
+/* ===== SLOT BLOQUEADO (JACKPOT) ===== */
+.slot.locked {
+  border-color: #ffb3f2;
+  box-shadow:
+    0 0 30px #ff7ad9,
+    inset 0 0 20px rgba(255, 0, 200, 0.8);
+}
+
+.slot.locked .symbol img {
+  filter: drop-shadow(0 0 20px #ff7ad9) drop-shadow(0 0 40px #ff4fd8);
+  animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* ===== ALAVANCA ===== */
+.lever-container {
+  margin-left: 50px;
+  height: 260px;
+  display: flex;
+  align-items: flex-start;
+}
+
+#lever {
+  width: 16px;
+  height: 220px;
+  background: linear-gradient(to bottom, #ccc, #666);
+  border-radius: 10px;
+  position: relative;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.7);
+}
+
+.lever-ball {
+  width: 52px;
+  height: 52px;
+  background: radial-gradient(circle at top, #ffb3f2, #b300ff);
+  border-radius: 50%;
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 25px rgba(255, 0, 200, 1);
+  cursor: grab;
+}
+
+/* ===== TREMOR DA TELA ===== */
+body.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-8px, 6px);
+  }
+  40% {
+    transform: translate(8px, -6px);
+  }
+  60% {
+    transform: translate(-6px, -8px);
+  }
+  80% {
+    transform: translate(6px, 8px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* ===== BOTÕES ===== */
+#resetButton,
+#forceSlotButton {
+  position: fixed;
+  bottom: 15px;
+  background: transparent;
+  border: 1px solid rgba(255, 122, 217, 0.4);
+  color: #ff7ad9;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+#resetButton {
+  right: 20px;
+}
+
+#forceSlotButton {
+  right: 95px;
+}
+
+#resetButton:hover,
+#forceSlotButton:hover {
+  opacity: 1;
+}
+
+/* ===== TÍTULO ===== */
+.machine-title {
+  position: absolute;
+  top: 40px;
+  font-size: 3.2rem;
+  color: #ff7ad9;
+  text-shadow:
+    0 0 15px #ff4fd8,
+    0 0 40px rgba(255, 0, 200, 0.8);
+  letter-spacing: 4px;
+}
+
+/* ===== JACKPOT OVERLAY ===== */
+#jackpotOverlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle,
+    rgba(90, 0, 130, 0.95),
+    rgba(20, 0, 30, 0.98)
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 0.4s ease;
+}
+
+#jackpotOverlay.active {
+  opacity: 1;
+  pointer-events: all;
+  animation: megaShake 0.3s infinite;
+}
+
+.jackpot-text {
+  font-size: 6rem;
+  color: #fff;
+  text-shadow:
+    0 0 20px #ff7ad9,
+    0 0 60px #ff4fd8;
+  animation: pulse 0.6s infinite alternate;
+}
+
+.jackpot-sub {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  color: #ffb3f2;
+  text-align: center;
+  text-shadow: 0 0 20px rgba(255, 0, 200, 0.8);
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes megaShake {
+  0% {
+    transform: translate(0);
+  }
+  25% {
+    transform: translate(-10px, 8px);
+  }
+  50% {
+    transform: translate(10px, -8px);
+  }
+  75% {
+    transform: translate(-8px, -10px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}

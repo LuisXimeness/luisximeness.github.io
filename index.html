@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Caça-Níqueis</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <h1 class="machine-title">APOSTAS INFINITAS!</h1>
+
+    <div class="machine-wrapper">
+      <div class="slot-machine">
+        <div class="slots">
+          <!-- SLOT 1 -->
+          <div class="slot" data-index="0">
+            <div class="reel">
+              <div class="symbol"><img src="img/slot1.png" alt="1" /></div>
+              <div class="symbol"><img src="img/slot2.png" alt="2" /></div>
+              <div class="symbol"><img src="img/slot3.png" alt="3" /></div>
+              <div class="symbol"><img src="img/slot4.png" alt="4" /></div>
+
+              <!-- duplicado -->
+              <div class="symbol"><img src="img/slot1.png" alt="1" /></div>
+              <div class="symbol"><img src="img/slot2.png" alt="2" /></div>
+              <div class="symbol"><img src="img/slot3.png" alt="3" /></div>
+              <div class="symbol"><img src="img/slot4.png" alt="4" /></div>
+            </div>
+          </div>
+
+          <!-- SLOT 2 -->
+          <div class="slot" data-index="1">
+            <div class="reel">
+              <div class="symbol"><img src="img/slot1.png" alt="1" /></div>
+              <div class="symbol"><img src="img/slot2.png" alt="2" /></div>
+              <div class="symbol"><img src="img/slot3.png" alt="3" /></div>
+              <div class="symbol"><img src="img/slot4.png" alt="4" /></div>
+
+              <!-- duplicado -->
+              <div class="symbol"><img src="img/slot1.png" alt="1" /></div>
+              <div class="symbol"><img src="img/slot2.png" alt="2" /></div>
+              <div class="symbol"><img src="img/slot3.png" alt="3" /></div>
+              <div class="symbol"><img src="img/slot4.png" alt="4" /></div>
+            </div>
+          </div>
+
+          <!-- SLOT 3 -->
+          <div class="slot" data-index="2">
+            <div class="reel">
+              <div class="symbol"><img src="img/slot1.png" alt="1" /></div>
+              <div class="symbol"><img src="img/slot2.png" alt="2" /></div>
+              <div class="symbol"><img src="img/slot3.png" alt="3" /></div>
+              <div class="symbol"><img src="img/slot4.png" alt="4" /></div>
+
+              <!-- duplicado -->
+              <div class="symbol"><img src="img/slot1.png" alt="1" /></div>
+              <div class="symbol"><img src="img/slot2.png" alt="2" /></div>
+              <div class="symbol"><img src="img/slot3.png" alt="3" /></div>
+              <div class="symbol"><img src="img/slot4.png" alt="4" /></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lever-container">
+          <div id="lever">
+            <div class="lever-ball"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button id="resetButton">reset</button>
+    <button id="forceSlotButton">force 4</button>
+
+    <div id="jackpotOverlay">
+      <div class="jackpot-text">JACKPOT</div>
+      <div class="jackpot-sub">
+        Durante as próximas 3 rodadas<br />
+        Merlin Sanchez é virtualmente imortal!
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
