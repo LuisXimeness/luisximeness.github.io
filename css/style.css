@@ -267,3 +267,7 @@ body.shake {
     transform: translate(0);
   }
 }
+#lever {
+  touch-action: none;
+}
+
