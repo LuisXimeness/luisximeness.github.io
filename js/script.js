@@ -31,25 +31,35 @@ const TOP_LIMIT = -26;
 const BOTTOM_LIMIT = 160;
 const FORCE_REQUIRED = 130;
 
-leverBall.addEventListener("mousedown", (e) => {
+// 🔥 FUNÇÃO UNIFICADA (MOUSE + TOUCH)
+function getClientY(e) {
+  return e.touches ? e.touches[0].clientY : e.clientY;
+}
+
+// ===== START =====
+function startDrag(e) {
   if (isSpinning) return;
   isDragging = true;
-  startY = e.clientY;
-});
+  startY = getClientY(e);
+  e.preventDefault();
+}
 
-document.addEventListener("mousemove", (e) => {
+// ===== MOVE =====
+function moveDrag(e) {
   if (!isDragging || isSpinning) return;
+  e.preventDefault();
 
-  let delta = (e.clientY - startY) * 0.65;
+  let delta = (getClientY(e) - startY) * 0.65;
   let newTop = TOP_LIMIT + delta;
 
   if (newTop < TOP_LIMIT) newTop = TOP_LIMIT;
   if (newTop > BOTTOM_LIMIT) newTop = BOTTOM_LIMIT;
 
   leverBall.style.top = `${newTop}px`;
-});
+}
 
-document.addEventListener("mouseup", () => {
+// ===== END =====
+function endDrag() {
   if (!isDragging || isSpinning) return;
   isDragging = false;
 
@@ -60,7 +70,17 @@ document.addEventListener("mouseup", () => {
   } else {
     resetLever();
   }
-});
+}
+
+// ===== EVENTOS MOUSE =====
+leverBall.addEventListener("mousedown", startDrag);
+document.addEventListener("mousemove", moveDrag);
+document.addEventListener("mouseup", endDrag);
+
+// ===== EVENTOS TOUCH =====
+leverBall.addEventListener("touchstart", startDrag, { passive: false });
+document.addEventListener("touchmove", moveDrag, { passive: false });
+document.addEventListener("touchend", endDrag);
 
 /* ===== SPIN ===== */
 function startSpin() {
@@ -84,7 +104,7 @@ function startSpin() {
   setTimeout(() => {
     resetLever();
     isSpinning = false;
-    checkJackpot(); // verificação final segura
+    checkJackpot();
   }, 3500);
 }
 
@@ -105,7 +125,6 @@ function spinReel(slot, index, duration) {
     reel.style.transition = "none";
     reel.style.transform = `translateY(${-finalIndex * SYMBOL_HEIGHT}px)`;
 
-    // 🔥 REGISTRO CORRETO DO SÍMBOLO FINAL
     if (finalSymbol === JACKPOT_SYMBOL) {
       lockSlot(slot, index, finalSymbol);
     }
@@ -132,9 +151,7 @@ function checkJackpot() {
     lockedSlots.every((v) => v) &&
     lockedSymbols.every((s) => s === JACKPOT_SYMBOL);
 
-  if (jackpot) {
-    activateJackpot();
-  }
+  if (jackpot) activateJackpot();
 }
 
 function activateJackpot() {
@@ -168,7 +185,7 @@ resetButton.addEventListener("click", () => {
   });
 });
 
-/* ===== BOTÃO FORÇAR SLOT PARA JACKPOT ===== */
+/* ===== BOTÃO FORÇAR SLOT ===== */
 function forceNextSlotToJackpot() {
   if (isSpinning) return;
 
@@ -182,7 +199,6 @@ function forceNextSlotToJackpot() {
     reel.style.transition = "none";
     reel.style.transform = `translateY(${-finalIndex * SYMBOL_HEIGHT}px)`;
 
-    // 🔥 CORREÇÃO DEFINITIVA
     lockSlot(slot, i, JACKPOT_SYMBOL);
     break;
   }
